@@ -227,4 +227,26 @@
     var f = self.webpackChunk_N_E = self.webpackChunk_N_E || [];
     f.forEach(d.O.bind(null, 0)), f.push = d.O.bind(null, f.push.bind(f));
   })();
-  
+  const currentVersion = "1.2.3";  // Actualiza esto cada vez que subes una nueva versión
+
+function clearCookies() {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].split("=");
+        document.cookie = cookie[0] + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+}
+
+function checkVersion() {
+    const savedVersion = document.cookie.split("; ").find(row => row.startsWith("siteVersion="));
+    const savedVersionValue = savedVersion ? savedVersion.split("=")[1] : null;
+
+    if (savedVersionValue !== currentVersion) {
+        clearCookies();
+        document.cookie = `siteVersion=${currentVersion}; path=/;`;
+    }
+}
+
+window.onload = () => {
+    checkVersion();
+};
